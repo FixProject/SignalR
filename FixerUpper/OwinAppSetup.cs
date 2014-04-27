@@ -14,9 +14,9 @@ namespace FixerUpper
         public static void Setup(Action<Func<AppFunc, AppFunc>> use)
         {
             var appBuilder = new AppBuilderShim(use);
-            appBuilder.MapSignalR();
             use(Statics.AddFileAlias("/index.html", "/")
                 .AddFolder("/Scripts"));
+            appBuilder.MapSignalR();
         }
     }
 

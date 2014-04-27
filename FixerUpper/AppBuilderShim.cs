@@ -60,30 +60,31 @@ namespace FixerUpper
                 var appFunc = (AppFunc)Convert(typeof (AppFunc), app);
                 return async env =>
                 {
-                    var holdResponse = (Stream) env["owin.ResponseBody"];
-                    MemoryStream proxyResponse;
-                    env["owin.ResponseBody"] = proxyResponse = new MemoryStream();
+                    //var holdResponse = (Stream)env["owin.ResponseBody"];
+                    //MemoryStream proxyResponse;
+                    //env["owin.ResponseBody"] = proxyResponse = new MemoryStream();
                     try
                     {
                         await appFunc(env);
                         object statusCode;
                         if ((!env.TryGetValue("owin.ResponseStatusCode", out statusCode))
-                            || !(ReferenceEquals(statusCode, NotFoundSignal)  || (int) statusCode == 400))
+                            || !(ReferenceEquals(statusCode, NotFoundSignal) || (int) statusCode == 400))
                         {
-                            proxyResponse.Position = 0;
-                            await proxyResponse.CopyToAsync(holdResponse);
+                            //proxyResponse.Position = 0;
+                            //await proxyResponse.CopyToAsync(holdResponse);
                             env["owin.ResponseStatusCode"] = 200;
                             return;
                         }
+                        //    Trace.TraceInformation("Hm.");
                     }
                     catch (Exception ex)
                     {
                         Trace.TraceError(ex.ToString());
                     }
-                    finally
-                    {
-                        env["owin.ResponseBody"] = holdResponse;
-                    }
+                    //finally
+                    //{
+                    //    env["owin.ResponseBody"] = holdResponse;
+                    //}
                     await next(env);
                 };
             });
