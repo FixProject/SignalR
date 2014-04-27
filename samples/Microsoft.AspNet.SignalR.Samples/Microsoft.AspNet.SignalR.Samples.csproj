@@ -194,6 +194,9 @@
     <Content Include="Hubs\Test\clientsGroupSender.js" />
     <Content Include="Hubs\Test\common.js" />
     <Content Include="Hubs\Test\Default.aspx" />
+    <None Include="Scripts\jquery-2.1.0.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.0.js" />
+    <Content Include="Scripts\jquery-2.1.0.min.js" />
     <Content Include="silverlight.html" />
     <Content Include="Raw\Default.aspx" />
     <Content Include="Raw\test\basic.htm" />
@@ -207,8 +210,6 @@
     <Content Include="Scripts\jcanvas.js" />
     <Content Include="Hubs\DrawingPad\drawingpad.js" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.8.2.js" />
-    <Content Include="Scripts\jquery-1.8.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.9.0.js" />
     <Content Include="Scripts\jquery-ui-1.9.0.min.js" />
     <Content Include="Scripts\jquery.color-2.1.0.js" />
@@ -238,6 +239,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Scripts\jquery-2.1.0.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\src\Common\CommonVersionInfo.cs">

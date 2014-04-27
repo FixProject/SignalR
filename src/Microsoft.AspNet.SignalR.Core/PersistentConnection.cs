@@ -499,16 +499,22 @@ namespace Microsoft.AspNet.SignalR
             string connectionId = Guid.NewGuid().ToString("d");
             string connectionToken = connectionId + ':' + GetUserIdentity(context);
 
+            var url = context.Request.LocalPath.Replace("/negotiate", "");
+            var protect = ProtectedData.Protect(connectionToken, Purposes.ConnectionToken);
+            var totalSeconds = _configurationManager.DisconnectTimeout.TotalSeconds;
+            var tryWebSockets = _transportManager.SupportsTransport(WebSocketsTransportName) && context.Environment.SupportsWebSockets();
+            var protocolVersion = _protocolResolver.Resolve(context.Request).ToString();
+            var timeout = _configurationManager.TransportConnectTimeout.TotalSeconds;
             var payload = new
             {
-                Url = context.Request.LocalPath.Replace("/negotiate", ""),
-                ConnectionToken = ProtectedData.Protect(connectionToken, Purposes.ConnectionToken),
+                Url = url,
+                ConnectionToken = protect,
                 ConnectionId = connectionId,
                 KeepAliveTimeout = keepAliveTimeout != null ? keepAliveTimeout.Value.TotalSeconds : (double?)null,
-                DisconnectTimeout = _configurationManager.DisconnectTimeout.TotalSeconds,
-                TryWebSockets = _transportManager.SupportsTransport(WebSocketsTransportName) && context.Environment.SupportsWebSockets(),
-                ProtocolVersion = _protocolResolver.Resolve(context.Request).ToString(),
-                TransportConnectTimeout = _configurationManager.TransportConnectTimeout.TotalSeconds
+                DisconnectTimeout = totalSeconds,
+                TryWebSockets = tryWebSockets,
+                ProtocolVersion = protocolVersion,
+                TransportConnectTimeout = timeout
             };
 
             if (!String.IsNullOrEmpty(context.Request.QueryString["callback"]))
