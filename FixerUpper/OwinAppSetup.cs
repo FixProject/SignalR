@@ -13,10 +13,11 @@ namespace FixerUpper
     {
         public static void Setup(Action<Func<AppFunc, AppFunc>> use)
         {
-            var appBuilder = new AppBuilderShim(use);
+            //var appBuilder = new AppBuilderShim(use);
+            use(Map.For("/signalr", SignalRShim.Hub()));
             use(Statics.AddFileAlias("/index.html", "/")
                 .AddFolder("/Scripts"));
-            appBuilder.MapSignalR();
+            //appBuilder.MapSignalR();
         }
     }
 
